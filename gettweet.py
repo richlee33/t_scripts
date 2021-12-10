@@ -47,7 +47,8 @@ def process_response(resp):
         tweet = {}
         tweet['author_id'] = item['author_id']
         tweet['created_at'] = item['created_at']
-        tweet['text'] = item['text']
+        cleaned_text = item['text'].replace('\n', ' ').replace('\r', '')
+        tweet['text'] = cleaned_text
         for item2 in resp['includes']['users']:
             if item2['id'] == item['author_id']:
                 tweet['username'] = item2['username']
@@ -88,8 +89,7 @@ def main():
     #output to file
     with open('deeztweets.txt', 'w', encoding="utf-8") as f:
         for item in tweet_list:
-            f.write("%s,%s\n" % (item['username'], item['created_at']))
-            # cant output to file the text bc it has carrage returns in it :(
+            f.write("%s,%s,%s\n" % (item['username'], item['created_at'], item['text']))
 
 if __name__ == "__main__":
     main()
