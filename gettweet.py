@@ -6,8 +6,8 @@ import time
 import datetime
 
 # Usage:
-# python.py gettweet.py <list of hashtags to search for>
-# python.py gettweet.py #deeznuts3d
+# python gettweet.py <list of hashtags to search for>
+# python gettweet.py #deeznuts3d
 
 # To set your environment variables in your terminal run the following line:
 # export 'BEARER_TOKEN'='<your_bearer_token>'
@@ -24,9 +24,9 @@ hashtags = []
 
 def get_query_params(query_string, next_token = None):
     if next_token == None:
-        query_params = {'query': query_string,'tweet.fields': 'created_at', 'expansions': 'author_id'}
+        query_params = {'query': query_string, 'tweet.fields': 'created_at', 'expansions': 'author_id'}
     else:
-        query_params = {'query': query_string,'tweet.fields': 'created_at', 'expansions': 'author_id', 'next_token' : next_token}
+        query_params = {'query': query_string, 'tweet.fields': 'created_at', 'expansions': 'author_id', 'next_token' : next_token}
     return query_params
 
 def bearer_oauth(r):
