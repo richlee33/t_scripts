@@ -1,3 +1,9 @@
+# Usage:
+# python gettweet.py <list of hashtags to search for>
+# python gettweet.py #deeznuts3d
+# based off twitter sample code:
+# https://github.com/twitterdev/Twitter-API-v2-sample-code/blob/main/Recent-Search/recent_search.py
+
 import os
 import sys
 import requests
@@ -5,19 +11,14 @@ import json
 import time
 import datetime
 
-# Usage:
-# python gettweet.py <list of hashtags to search for>
-# python gettweet.py #deeznuts3d
-
 # To set your environment variables in your terminal run the following line:
 # export 'BEARER_TOKEN'='<your_bearer_token>'
 bearer_token = os.environ.get("BEARER_TOKEN")
 
 tweet_list = []
-
 search_url = "https://api.twitter.com/2/tweets/search/recent"
-
 hashtags = []
+default_hashtag = "#deeznutsnft"
 
 # Optional params: start_time,end_time,since_id,until_id,max_results,next_token,
 # expansions,tweet.fields,media.fields,poll.fields,place.fields,user.fields
@@ -66,7 +67,7 @@ def main():
 
     #read hashtags from command line.  if there are none, use default
     if len(sys.argv) == 1:
-        hashtags.append("#deeznutsnft")
+        hashtags.append(default_hashtag)
     else:
         for item in range(1, len(sys.argv)):
             if ("#" not in sys.argv[item]):
