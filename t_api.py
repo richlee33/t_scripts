@@ -12,7 +12,7 @@ class TApi:
         user_name = user
         follower_list = []
 
-        #internal functions below
+        #internal function
         def _get_followers_query_params(user_name, next_cursor = None):
             if next_cursor is None:
                 query_params = {'screen_name': user_name, 'count': count}
@@ -20,6 +20,7 @@ class TApi:
                 query_params = {'screen_name': user_name, 'count': count, 'cursor' : next_cursor}
             return query_params
 
+        #internal function
         def _process_followers_response(resp):
             for item in resp['ids']:
                 follower_list.append(str(item))
@@ -29,14 +30,17 @@ class TApi:
         followers_request = TRequest(followers_url)
         query = _get_followers_query_params(user_name)
 
-        #make request to get followers
+        #make initial request to get followers
         json_response = followers_request.connect_to_endpoint(query)
+        if ("errors" in json_response):
+            print("Account to follow does not exist.")
+            return None
         #print(json.dumps(json_response, indent=4, sort_keys=True))
         
         #process the followers
         _process_followers_response(json_response)
     
-        #make more requests if next cursor is not 0
+        #make additional requests if next cursor is not 0
         try:
             while json_response['next_cursor'] != 0:
                 time.sleep(1)
@@ -58,8 +62,9 @@ class TApi:
         total_tweet_count = 0
         query_string = ''
         tweet_list = []
+        tweet_follows_count = 0
 
-        #internal functions below
+        #internal function
         def _get_tweets_query_params(query_string, next_token = None):
             # Optional params: start_time,end_time,since_id,until_id,max_results,next_token,
             # expansions,tweet.fields,media.fields,poll.fields,place.fields,user.fields
@@ -71,8 +76,9 @@ class TApi:
                     'max_results': 100, 'next_token' : next_token}
             return query_params
 
-
+        #internal function
         def _process_tweet_response(resp, followers_list = None):
+            nonlocal tweet_follows_count
             try:
                 for item in resp['data']:
                     tweet = {}
@@ -89,6 +95,7 @@ class TApi:
                                 #check author_id is in followers list
                                 if item['author_id'] in followers_list:
                                     tweet['follows'] = True
+                                    tweet_follows_count +=1
                                 else:
                                     tweet['follows'] = False
                             break #stop matching usernames
@@ -110,13 +117,13 @@ class TApi:
             query_string = query_string + search_items[i]
             if i < (len(search_items) - 1):
                 query_string = query_string + " "
-        print(query_string)
+        #print(query_string)
 
         #prepare request to search tweets
         query_request = TRequest(tweet_search_url)
         query = _get_tweets_query_params(query_string)
 
-        #make request to get tweets 
+        #make initial request to get tweets
         json_response = query_request.connect_to_endpoint(query)
         #print(json.dumps(json_response, indent=4, sort_keys=True))
 
@@ -125,9 +132,9 @@ class TApi:
 
         count_value = json_response['meta']['result_count']
         total_tweet_count = total_tweet_count + int(count_value)
-        print(total_tweet_count)
+        print(".")
 
-        #make more requests if next token is present
+        #make additional requests if next token is present
         try:
             while json_response['meta']['next_token'] != "null":
                 time.sleep(1)
@@ -138,11 +145,13 @@ class TApi:
                 _process_tweet_response(json_response, followers_list)
                 count_value = (json_response['meta']['result_count'])
                 total_tweet_count = total_tweet_count + int(count_value)
-                print(total_tweet_count)
+                print(".")
         except (KeyError):
-            print("end of tweets reached")
+            pass
 
-        print("total tweets processed: %d" %total_tweet_count)
+        print("Total tweets processed: %d" %total_tweet_count)
+        print("Found %d tweets that follows account" %tweet_follows_count)
+
 
         return tweet_list
 

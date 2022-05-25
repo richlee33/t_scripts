@@ -9,7 +9,7 @@ class BearerOauth(requests.auth.AuthBase):
     def __call__(self, r):
         bearer_token = os.environ.get("BEARER_TOKEN")
         if bearer_token is None:
-            raise Exception("Please set your twitter token in the BEARER_TOKEN environment variable")
+            raise Exception("Error, please set your twitter token in the BEARER_TOKEN environment variable")
 
         r.headers["Authorization"] = f"Bearer {bearer_token}"
         r.headers["User-Agent"] = "v2RecentSearchPython"
@@ -23,8 +23,7 @@ class TRequest:
 
     def connect_to_endpoint(self, params):
         response = requests.get(self.url, auth=BearerOauth(), params=params)
-        #print(response.status_code)
+        #print (response.json())
         if response.status_code != 200:
-            raise Exception(response.status_code, response.text)
+            print ("Error, non 200 response received.")
         return response.json()
-
