@@ -73,32 +73,36 @@ class TApi:
 
 
         def _process_tweet_response(resp, followers_list = None):
-            for item in resp['data']:
-                tweet = {}
-                username_match = False
+            try:
+                for item in resp['data']:
+                    tweet = {}
+                    username_match = False
 
-                tweet['author_id'] = item['author_id']
-                tweet['created_at'] = item['created_at']
-                cleaned_text = item['text'].replace('\n', ' ').replace('\r', '')
-                tweet['text'] = cleaned_text
-                for item2 in resp['includes']['users']:
-                    if item2['id'] == item['author_id']:
-                        tweet['username'] = item2['username']
-                        if followers_list is not None and len(followers_list) > 0:
-                            #check author_id is in followers list
-                            if item['author_id'] in followers_list:
-                                tweet['follows'] = True
-                            else:
-                                tweet['follows'] = False
-                        break #stop matching usernames
+                    tweet['author_id'] = item['author_id']
+                    tweet['created_at'] = item['created_at']
+                    cleaned_text = item['text'].replace('\n', ' ').replace('\r', '')
+                    tweet['text'] = cleaned_text
+                    for item2 in resp['includes']['users']:
+                        if item2['id'] == item['author_id']:
+                            tweet['username'] = item2['username']
+                            if followers_list is not None and len(followers_list) > 0:
+                                #check author_id is in followers list
+                                if item['author_id'] in followers_list:
+                                    tweet['follows'] = True
+                                else:
+                                    tweet['follows'] = False
+                            break #stop matching usernames
 
-                #print (tweet)
-                tweet_list.append(tweet)
-            return
+                    #print (tweet)
+                    tweet_list.append(tweet)
+                return
+            except KeyError:
+                print("No tweets found with search string")
+                return
 
 
         if len(search_items) == 0:
-            print("Unexpected empty list of seach items.")
+            print("Unexpected empty list of search items.")
             return
 
         #generate the query string using list of search items
@@ -138,7 +142,7 @@ class TApi:
         except (KeyError):
             print("end of tweets reached")
 
-        print("total records processed: %d" %total_tweet_count)
+        print("total tweets processed: %d" %total_tweet_count)
 
         return tweet_list
 
