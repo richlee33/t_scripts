@@ -8,7 +8,7 @@
 # Output:
 # a csv file tweet_list.csv containing a list of tweets containing search words and a False or True column if tweet author follows account
 # Help example:
-# $python gettweetfollowspy -h
+# $ python gettweetfollows.py -h
 # roughly based off twitter sample code:
 # https://github.com/twitterdev/Twitter-API-v2-sample-code/blob/main/Recent-Search/recent_search.py
 
