@@ -16,11 +16,11 @@ set up environment:
 ### gettweetfollows
 Gets a list of tweets containing word(s) and if the tweet author follows a certain account
 #### Usage:
-gettweetfollows.py -w <list of words to search for in tweet>
+gettweetfollows.py -w &lt;list of words to search for in tweet>
 #### Example:
 `python gettweetfollows.py -w "#bayc" "#giveaway"`
 #### Optionally check if tweet author follows an account:
-gettweetfollows.py -w <list of words to search for> -f <account to verify is being followed>
+gettweetfollows.py -w &lt;list of words to search for> -f &lt;account to verify is being followed>
 #### Example:
 `python gettweetfollows.py -w "#bayc" "#giveaway" -f midnightwrench`
 #### Output:
