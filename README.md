@@ -26,4 +26,27 @@ gettweetfollows.py -w <list of words to search for> -f <account to verify is bei
 #### Output:
 By default, a csv file `tweet_list.csv` will be written containing a list of tweets with specified words and a `False` or `True` whether or not the tweet author follows specified account.  To also output the list of tweets to the screen add the `-p` flag to the command line.
 #### Help:
-`python gettweetfollows.py -h` 
+`python gettweetfollows.py -h`
+#### Sample Run:
+```
+$ python gettweetfollows.py -w "#bayc" "#giveaway" -f midnightwrench
+Searching tweets for the word(s):
+['#bayc', '#giveaway']
+Checking for users following account midnightwrench
+Number of followers of midnightwrench: 1045
+.
+.
+. <one dot per 100 tweets found>
+.
+.
+Total tweets processed: 3993
+Found 3 tweets that follows account
+Tweets and whether or not author follows account saved to tweet_list.csv.
+```
+#### Sample Output File Exceprt:
+```
+username,tweet_dt_utc,follows_midnightwrench,text
+Truesmt,2022-05-20T22:51:37.000Z,False,RT @DavyBoy1888: 🤯 #NFTGiveaway 🤯  🏆 WIN 1 X MetaManz #900 NFT 🏆  1️⃣ Must Follow  @DavyBoy1888  @YoumanzC @lKenny_Tl 2️⃣ ♥️ &amp; RT  3️⃣ Tag…
+Truemass88,2022-05-20T00:00:13.000Z,False,RT @cbeaudoin92: Almost sold out get your #caws before it's too late. #rolex #Giveaway #staking for #eth rewards @dypfinance @garyvee @Twit…
+Saitamaenthu,2022-05-19T20:05:46.000Z,True,RT @TheeHustleHouse: 🔥#Giveaway🚨  We are super excited about the @IsmToys x #BAYC Chess set that is releasing soon  There is only a very li…
+```
