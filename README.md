@@ -2,8 +2,8 @@
 A set of python scripts to get and aggregate twitter tweets
 
 ## Requirements
-python 3
-BEARER_TOKEN set as environment variable, get from [twitter](https://developer.twitter.com/en/docs/twitter-api/getting-started/about-twitter-api).
+python 3  
+BEARER_TOKEN set as environment variable, get from [twitter](https://developer.twitter.com/en/docs/twitter-api/getting-started/about-twitter-api).  
 
 ## Installation
 set up environment:  
