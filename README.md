@@ -3,6 +3,7 @@ A set of python scripts to get and aggregate twitter tweets
 
 ## Requirements
 python 3
+BEARER_TOKEN set as environment variable, get from [twitter](https://developer.twitter.com/en/docs/twitter-api/getting-started/about-twitter-api).
 
 ## Installation
 set up environment:  
@@ -43,7 +44,7 @@ Total tweets processed: 3993
 Found 3 tweets that follows account
 Tweets and whether or not author follows account saved to tweet_list.csv.
 ```
-#### Sample Output File Exceprt:
+#### Sample Output File Excerpt:
 ```
 username,tweet_dt_utc,follows_midnightwrench,text
 Truesmt,2022-05-20T22:51:37.000Z,False,RT @DavyBoy1888: 🤯 #NFTGiveaway 🤯  🏆 WIN 1 X MetaManz #900 NFT 🏆  1️⃣ Must Follow  @DavyBoy1888  @YoumanzC @lKenny_Tl 2️⃣ ♥️ &amp; RT  3️⃣ Tag…
